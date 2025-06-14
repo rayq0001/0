@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { Sun, Moon } from "lucide-react";
 
 import Container from "./container";
 import { Separator } from "./ui/separator";
@@ -81,10 +80,6 @@ const NavBar = () => {
       localStorage.setItem("theme", "light");
     }
   }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
 
   return (
     <div
