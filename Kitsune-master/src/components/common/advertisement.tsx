@@ -6,6 +6,7 @@ interface AdProps {
   adFormat: 'banner468x60' | 'banner160x300' | 'banner320x50' | 'banner300x250' | 'banner160x600' | 'banner728x90';
   className?: string;
   customAd?: boolean;
+  style?: React.CSSProperties;
 }
 
 const adSizes = {
@@ -218,9 +219,10 @@ const CustomAd160x300 = () => {
   return <div className="w-[160px] h-[300px]" />;
 };
 
-const Advertisement = ({ adFormat, className, customAd = true }: AdProps) => {
+const Advertisement = ({ adFormat, className, customAd = true, style }: AdProps) => {
+  const size = adSizes[adFormat];
   return (
-    <div className={`w-full flex justify-center my-4 ${className || ''}`}>
+    <div className={`w-full flex justify-center my-4 ${className || ''}`} style={style}>
       {customAd ? (
         adFormat === 'banner300x250' ? (
           <CustomAd300x250 />
@@ -236,14 +238,14 @@ const Advertisement = ({ adFormat, className, customAd = true }: AdProps) => {
           <CustomAd160x300 />
         ) : (
           <div style={{
-            width: adSizes[adFormat].width,
-            height: adSizes[adFormat].height
+            width: size?.width || '0px',
+            height: size?.height || '0px'
           }} />
         )
       ) : (
         <div style={{
-          width: adSizes[adFormat].width,
-          height: adSizes[adFormat].height
+          width: size?.width || '0px',
+          height: size?.height || '0px'
         }} />
       )}
     </div>
