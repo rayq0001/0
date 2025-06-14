@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { Sun, Moon } from "lucide-react";
 
 import Container from "./container";
 import { Separator } from "./ui/separator";
@@ -38,6 +39,12 @@ const menuItems: Array<{ title: string; href?: string }> = [
 
 const NavBar = () => {
   const auth = useAuthStore();
+  const [theme, setTheme] = useState<string>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("theme") || "light";
+    }
+    return "light";
+  });
   const { y } = useScrollPosition();
   const isHeaderFixed = true;
   const isHeaderSticky = y > 0;
@@ -64,6 +71,20 @@ const NavBar = () => {
     };
     refreshAuth();
   }, []);
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
 
   return (
     <div
@@ -99,6 +120,18 @@ const NavBar = () => {
         </div>
         <div className="w-1/3 hidden lg:flex items-center gap-5">
           <SearchBar />
+          <button
+            onClick={toggleTheme}
+            aria-label="تبديل الوضع الليلي"
+            className="w-10 h-10 flex items-center justify-center bg-white/10 dark:bg-black/10 border border-white/20 dark:border-black/20 transition-colors duration-300 shadow-none rounded-none hover:bg-white/20 dark:hover:bg-black/20"
+            style={{ backdropFilter: 'blur(4px)' }}
+          >
+            {theme === "dark" ? (
+              <Sun className="w-6 h-6 text-white" />
+            ) : (
+              <Moon className="w-6 h-6 text-black" />
+            )}
+          </button>
           {auth.auth ? <NavbarAvatar auth={auth} /> : <LoginPopoverButton />}
         </div>
         <div className="lg:hidden flex items-center gap-5">
