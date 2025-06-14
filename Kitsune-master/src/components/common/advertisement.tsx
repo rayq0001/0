@@ -218,7 +218,7 @@ const CustomAd160x300 = () => {
   return <div className="w-[160px] h-[300px]" />;
 };
 
-const Advertisement = ({ adSlot, adFormat, className, customAd = true }: AdProps) => {
+const Advertisement = ({ adFormat, className, customAd = true }: AdProps) => {
   return (
     <div className={`w-full flex justify-center my-4 ${className || ''}`}>
       {customAd ? (
