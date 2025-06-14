@@ -4,6 +4,15 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  color: #fff !important;
+}
+
+html {
+  background: #0f172a !important;
+}
+
+:root {
+  color-scheme: dark;
 }
 
 @layer utilities {
@@ -76,6 +85,9 @@ body {
 
   body {
     @apply bg-background text-foreground;
+  }
+  html {
+    @apply dark;
   }
 }
 
