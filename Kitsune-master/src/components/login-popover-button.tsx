@@ -78,27 +78,16 @@ function LoginPopoverButton() {
         password: formData.password,
         passwordConfirm: formData.confirm_password,
       });
-
-      await pb.collection("users").update(pb.authStore.record?.id!, {
-        verified: true,
-      });
-
-      if (pb.authStore.isValid && pb.authStore.record) {
-        toast.success("Account created successfully");
-        clearForm();
-        auth.setAuth({
-          id: pb.authStore.record.id,
-          email: pb.authStore.record.email,
-          username: pb.authStore.record.username,
-          avatar: pb.authStore.record.avatar,
-          collectionId: pb.authStore.record.collectionId,
-          collectionName: pb.authStore.record.collectionName,
-          autoSkip: pb.authStore.record.autoSkip,
-        });
+      toast.success("Account created successfully!", { style: { background: "green" } });
+      clearForm();
+    } catch (error: any) {
+      let message = "Error creating account";
+      if (error?.data && typeof error.data === "object") {
+        message = Object.values(error.data).flat().join(" | ");
+      } else if (error?.message) {
+        message = error.message;
       }
-    } catch (e) {
-      console.error("Signup error:", e);
-      toast.error("Error creating account", { style: { background: "red" } });
+      toast.error(message, { style: { background: "red" } });
     }
   };
 
