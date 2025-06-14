@@ -208,6 +208,7 @@ const EpisodePlaylist = ({
               {(index + 1) % 20 === 0 && (
                 <Advertisement
                   adSlot={`episode_list_${Math.floor((index + 1) / 20)}`}
+                  adFormat="banner300x250"
                   style={{ margin: "10px 0" }}
                 />
               )}
