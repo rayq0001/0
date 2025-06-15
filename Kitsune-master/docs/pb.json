@@ -1,4 +1,4 @@
-[
+firebase login[
   {
     "id": "pbc_3142635823",
     "listRule": null,
@@ -336,6 +336,18 @@
         "name": "",
         "username": "",
         "avatarURL": "avatar"
+      },
+      "providers": {
+        "google": {
+          "enabled": true,
+          "allowRegistrations": true,
+          "clientId": "ENCRYPTED_CLIENT_ID",
+          "clientSecret": "ENCRYPTED_CLIENT_SECRET",
+          "authUrl": "https://accounts.google.com/o/oauth2/auth",
+          "tokenUrl": "https://oauth2.googleapis.com/token",
+          "userApiUrl": "https://www.googleapis.com/oauth2/v1/userinfo",
+          "emailApiUrl": "https://www.googleapis.com/oauth2/v1/userinfo"
+        }
       },
       "enabled": true
     },
@@ -1111,5 +1123,122 @@
     ],
     "indexes": [],
     "system": false
+  },
+  {
+    "id": "google_auth",
+    "name": "google_auth",
+    "type": "base",
+    "system": false,
+    "listRule": "@request.auth.id != \"\" && user.id = @request.auth.id",
+    "viewRule": "@request.auth.id != \"\" && user.id = @request.auth.id",
+    "createRule": "@request.auth.id != \"\" && user.id = @request.auth.id",
+    "updateRule": "@request.auth.id != \"\" && user.id = @request.auth.id",
+    "deleteRule": "@request.auth.id != \"\" && user.id = @request.auth.id",
+    "fields": [
+      {
+        "id": "google_id",
+        "name": "googleId",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": true,
+        "options": {
+          "min": null,
+          "max": 100,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "user",
+        "name": "user",
+        "type": "relation",
+        "required": true,
+        "unique": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": 1
+        }
+      },
+      {
+        "id": "google_email",
+        "name": "googleEmail",
+        "type": "email",
+        "system": false,
+        "required": true,
+        "unique": true,
+        "options": {
+          "exceptDomains": [],
+          "onlyDomains": []
+        }
+      },
+      {
+        "id": "access_token",
+        "name": "accessToken",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": 500,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "refresh_token",
+        "name": "refreshToken",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": 500,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "token_expiry",
+        "name": "tokenExpiry",
+        "type": "date",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      },
+      {
+        "id": "created",
+        "name": "created",
+        "type": "autodate",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "onCreate": true,
+          "onUpdate": false
+        }
+      },
+      {
+        "id": "updated",
+        "name": "updated",
+        "type": "autodate",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "onCreate": true,
+          "onUpdate": true
+        }
+      }
+    ],
+    "indexes": [
+      "CREATE UNIQUE INDEX idx_google_auth_id ON google_auth (googleId)",
+      "CREATE UNIQUE INDEX idx_google_auth_email ON google_auth (googleEmail)"
+    ]
   }
 ]
