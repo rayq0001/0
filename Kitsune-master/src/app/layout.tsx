@@ -31,6 +31,7 @@ export const metadata: Metadata = {
   applicationName: APP_NAME,
   title: APP_DEFAULT_TITLE,
   description: APP_DESCRIPTION,
+  monetag: "131167917e3df270be7693e6a5f78edc",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -61,6 +62,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <meta name="monetag" content="131167917e3df270be7693e6a5f78edc" />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-X9RZ58XPH1"
           strategy="afterInteractive"
