@@ -27,11 +27,9 @@ const APP_NAME = "4RB ANIME";
 const APP_DEFAULT_TITLE = "4RB ANIME | Anime Streaming";
 const APP_DESCRIPTION = "Stream your favourite anime with ease and no ads";
 
-export const metadata: Metadata = {
-  applicationName: APP_NAME,
+export const metadata: Metadata = {  applicationName: APP_NAME,
   title: APP_DEFAULT_TITLE,
   description: APP_DESCRIPTION,
-  monetag: "131167917e3df270be7693e6a5f78edc",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
