@@ -28,7 +28,7 @@ import { useGetAnimeDetails } from "@/query/get-anime-details";
 import Loading from "@/app/loading";
 import { useAuthStore } from "@/store/auth-store";
 import { toast } from "sonner";
-import Advertisement from "@/components/common/advertisement";
+import Advertisement from "@/components/ads";
 import useBookMarks from "@/hooks/use-get-bookmark";
 import { useGetAnimeBanner } from "@/query/get-banner-anime";
 
@@ -100,7 +100,11 @@ const Page = () => {
     <Loading />
   ) : (
     <div className="w-full z-50">
-      <Advertisement adSlot="details_top_banner" adFormat="banner300x250" customAd={true} />
+      {/* Top Advertisement */}
+      <div className="w-full flex justify-center mb-4">
+        <Advertisement position="top" />
+      </div>
+
       <div className="h-[30vh] md:h-[40vh] w-full relative ">
         {bannerLoading ? (
           <div className="absolute inset-0 m-auto w-full h-full bg-slate-900 animate-pulse"></div>
@@ -269,7 +273,10 @@ const Page = () => {
           )}
         </Tabs>
 
-        <Advertisement adSlot="details_mid_banner" adFormat="banner728x90" />
+        {/* Middle Advertisement */}
+        <div className="w-full flex justify-center my-4">
+          <Advertisement position="bottom" />
+        </div>
 
         {!!anime.recommendedAnimes.length && (
           <AnimeCarousel
@@ -279,7 +286,10 @@ const Page = () => {
           />
         )}
 
-        <Advertisement adSlot="details_bottom_banner" adFormat="banner468x60" />
+        {/* Bottom Advertisement */}
+        <div className="w-full flex justify-center mt-4">
+          <Advertisement position="bottom" />
+        </div>
       </Container>
     </div>
   );
