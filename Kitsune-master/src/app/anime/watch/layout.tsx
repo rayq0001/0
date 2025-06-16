@@ -25,6 +25,7 @@ import { IAnime } from "@/types/anime";
 import useBookMarks from "@/hooks/use-get-bookmark";
 import { toast } from "sonner";
 import { useGetAllEpisodes } from "@/query/get-all-episodes";
+import Advertisement from "@/components/ads";
 
 type Props = {
   children: ReactNode;
@@ -128,9 +129,22 @@ const Layout = (props: Props) => {
   if (isLoading) return <Loading />;
 
   return (
-    anime?.anime.info && (
-      <Container className="mt-[6.5rem] space-y-10 pb-20">
-        <div className="grid lg:grid-cols-4 grid-cols-1 gap-y-5 gap-x-10 h-auto w-full">
+    <div className="min-h-screen">
+      <Container>
+        {/* Top Advertisement - مركز أفقياً */}
+        <div className="w-full flex justify-center">
+          <Advertisement position="top" className="mb-4" />
+        </div>
+        
+        {/* Player */}
+        {props.children}
+
+        {/* Bottom Advertisement - مركز أفقياً */}
+        <div className="w-full flex justify-center">
+          <Advertisement position="bottom" className="my-4" />
+        </div>
+
+        <div className="flex flex-col-reverse md:flex-row gap-4 mt-4">
           <div className="lg:col-span-3 col-span-1 lg:mb-0">
             {props.children}
           </div>
@@ -180,7 +194,7 @@ const Layout = (props: Props) => {
           anime={anime?.recommendedAnimes as IAnime[]}
         />
       </Container>
-    )
+    </div>
   );
 };
 export default Layout;
