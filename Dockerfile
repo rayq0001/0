@@ -3,7 +3,13 @@
 # ---------------------------------------------------
     FROM node:20-alpine AS builder
 
+    # Accept build-time environment variables for public Next.js vars
+    ARG NEXT_PUBLIC_PROXY_URL
+    ENV NEXT_PUBLIC_PROXY_URL=${NEXT_PUBLIC_PROXY_URL}
+    
     WORKDIR /app
+    RUN apk add --no-cache --virtual .build-deps git openssh-client
+    
     # Install dependencies
     COPY package.json package-lock.json ./
     RUN npm ci
@@ -16,34 +22,30 @@
     # 2) Runner stage – production optimized
     # ---------------------------------------------------
     FROM node:20-alpine AS runner
-    
     WORKDIR /app
+    RUN apk add --no-cache curl
     
     # Create non-root user
     RUN addgroup -g 1001 -S nodejs \
      && adduser -S nextjs -u 1001 -G nodejs
     
-    # Copy standalone build from builder
+    # Copy standalone artifacts
     COPY --from=builder /app/.next/standalone .
-    COPY --from=builder /app/.next/static ./public/_next/static
-    # Copy public static files
+    COPY --from=builder /app/.next/static ./.next/static
     COPY --from=builder /app/public ./public
     
-    # Ensure we have minimal dependencies (if any extras)
-    # Note: standalone build already includes required node_modules
+    # Pass through the public env into runtime (if needed)
+    ENV NEXT_PUBLIC_PROXY_URL=${NEXT_PUBLIC_PROXY_URL}
     
-    # Ownership and permissions
+    # Set ownership & permissions
     RUN chown -R nextjs:nodejs /app
     USER nextjs
     
-    # Configure environment
+    # Runtime env
     ENV NODE_ENV=production
     ENV PORT=3000
-    ENV HOST=0.0.0.0
-    
-    # Expose app port
     EXPOSE 3000
     
-    # Start the standalone server built by Next.js
+    # Start the standalone server
     CMD ["node", "server.js", "--hostname", "0.0.0.0", "--port", "3000"]
     
