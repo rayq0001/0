@@ -13,10 +13,6 @@ const nextConfig = {
     ],
   },
   experimental: {
-    // Disable worker threads completely
-    workerThreads: false,
-    // Disable Webpack 5 worker pool
-    webpackBuildWorker: false,
     // Add pino and aniwatch to external packages
     serverComponentsExternalPackages: ['pino', 'pino-pretty', 'aniwatch'],
   },

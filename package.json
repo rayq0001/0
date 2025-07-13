@@ -61,7 +61,6 @@
     "zustand": "^5.0.3"
   },
   "devDependencies": {
-    "@types/cheerio": "^1.0.0",
     "@types/crypto-js": "^4.2.2",
     "@types/http-proxy": "^1.17.16",
     "@types/node": "^20",
